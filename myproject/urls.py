@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from onboarding import views
 
 urlpatterns = [
+    path("", views.OnboardView.as_view(), name="onboard"),
     path('admin/', admin.site.urls),
     path(r'onboarding/', include("onboarding.urls")),
 ]

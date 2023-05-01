@@ -36,9 +36,12 @@
 				<label for="field3">What price are you selling at?</label>
 				<input type="text" id="price" name="price">
 			</div>
-      <div>
+      		<div>
 				<label for="field3">Which network would you like to receive funds at?</label>
-				<input type="text" id="network" name="network">
+				<select id="network" name="network">
+					<option value="polygon">Polygon</option>
+					<option value="ethereum">Ethereum</option>
+				</select>
 			</div>
       <div>
 				<label for="field3">What address do you want to receive funds at?</label>
@@ -49,10 +52,12 @@
 				<input type="text" id="email" name="email">
 			</div>
 		</div>
+		<button id="back-button" type="button" style="visibility:hidden;">Back</button>
 		<button id="next-button" type="button">Next</button>
 	</form>
 
 	<script>
+		document.on
 		function hasEmptyString(obj) {
 			for (var key in obj) {
 				if (typeof obj[key] === 'string' && obj[key].length === 0) {
@@ -65,6 +70,7 @@
 		// Get references to the elements
 		const stepContainer = document.getElementById('step-container');
 		const steps = stepContainer.querySelectorAll('div');
+		let backButton = document.getElementById('back-button');
 		let nextButton = document.getElementById('next-button');
 		let stepIndex = 0;
     	let inputs = {};
@@ -72,6 +78,20 @@
 
 		// Show the first step by default
 		steps[stepIndex].classList.add('active');
+
+
+		// Add click event listener to the Next button
+		backButton.addEventListener('click', function() {
+			if (stepIndex > 0) {
+				document.getElementById("back-button").style.visibility="visible";
+				// Show the previous step
+				steps[stepIndex].classList.remove('active');
+				stepIndex--;
+				steps[stepIndex].classList.add('active');
+			} else 
+				document.getElementById("back-button").style.visibility="hidden";
+
+		});
 
 		// Add click event listener to the Next button
 		nextButton.addEventListener('click', function() {
@@ -92,7 +112,7 @@
 
 			// Move to the next step
 			stepIndex++;
-
+			document.getElementById("back-button").style.visibility="visible";
 			// If we've reached the end, submit the form
 			if (stepIndex >= steps.length) {
 				document.forms[0].submit();
