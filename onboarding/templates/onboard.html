@@ -1,0 +1,107 @@
+{% load static %}
+<head>
+	<link rel="stylesheet" href="{% static "tabulator/css/tabulator.css" %}">
+	<title>Seller Onboarding Form</title>
+	<style>
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		input[type=text] {
+			display: block;
+			margin-bottom: 20px;
+		}
+		#step-container div {
+			display: none;
+		}
+		#step-container div.active {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<H1 text-align: center>Seller Onboarding Form</H1>
+	<form name="onboard", id="onboard" method="post" action="{% url 'recv_data' %}">
+		{% csrf_token %}
+		<div id="step-container">
+			<div class="active">
+				<label for="field1">What is the name of your store?</label>
+				<input type="text" id="name" name="name">
+			</div>
+			<div>
+				<label for="field2">What is the balance left on your gift card?</label>
+				<input type="text" id="balance" name="balance">
+			</div>
+			<div>
+				<label for="field3">What price are you selling at?</label>
+				<input type="text" id="price" name="price">
+			</div>
+      <div>
+				<label for="field3">Which network would you like to receive funds at?</label>
+				<input type="text" id="network" name="network">
+			</div>
+      <div>
+				<label for="field3">What address do you want to receive funds at?</label>
+				<input type="text" id="address" name="address">
+			</div>
+       <div>
+				<label for="email">What’s your email address?</label>
+				<input type="text" id="email" name="email">
+			</div>
+		</div>
+		<button id="next-button" type="button">Next</button>
+	</form>
+
+	<script>
+		function hasEmptyString(obj) {
+			for (var key in obj) {
+				if (typeof obj[key] === 'string' && obj[key].length === 0) {
+				return true; // object has empty string
+				}
+			}
+			return false; // object does not have empty string
+		}
+
+		// Get references to the elements
+		const stepContainer = document.getElementById('step-container');
+		const steps = stepContainer.querySelectorAll('div');
+		let nextButton = document.getElementById('next-button');
+		let stepIndex = 0;
+    	let inputs = {};
+    
+
+		// Show the first step by default
+		steps[stepIndex].classList.add('active');
+
+		// Add click event listener to the Next button
+		nextButton.addEventListener('click', function() {
+			// Hide the current step
+			let currentFieldName = steps[stepIndex].lastElementChild.name;
+  			let currentFieldValue = steps[stepIndex].lastElementChild.value;
+			inputs[currentFieldName] = currentFieldValue
+			if (hasEmptyString(inputs)) {
+					alert("All fields must be filled out");
+					return;
+			}
+			steps[stepIndex].classList.remove('active');
+
+			if (currentFieldName === 'email') {
+				document.forms[0].submit();
+				return;
+			}
+
+			// Move to the next step
+			stepIndex++;
+
+			// If we've reached the end, submit the form
+			if (stepIndex >= steps.length) {
+				document.forms[0].submit();
+				return;
+			}
+
+			// Show the next step
+			steps[stepIndex].classList.add('active');
+		});
+	</script>
+</body>
+

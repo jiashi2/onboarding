@@ -1,0 +1,26 @@
+<!-- Include Tabulator library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.9.3/css/tabulator.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.9.3/js/tabulator.min.js"></script>
+
+
+<!-- Create a table element -->
+<div id="onboarded"></div>
+
+<!-- Initialize the table using Tabulator -->
+<script>
+    let tableData = {{ data|safe }};
+    // tableData = tableData['data']
+    let table = new Tabulator("#onboarded", {
+        data: tableData,
+        height:"311px",
+        layout:"fitColumns",
+        columns: [
+            {title: "Name", field:"name"},
+            {title: "Balance", field:"balance"},
+            {title: "Price", field:"price"},
+            {title: "Network", field:"network"},
+            {title: "Address", field:"address"},
+            {title: "Email", field:"email"},
+        ],
+    });
+</script>
