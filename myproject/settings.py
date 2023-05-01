@@ -30,7 +30,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.116.55',
     'devops.local.org',
-    'devops'
+    'ec2-3-23-101-201.us-east-2.compute.amazonaws.com',
+    '172.31.2.164',
+    '3.23.101.201'
 ]
 
 
